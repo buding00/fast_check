@@ -1,0 +1,18 @@
+[package]
+name = "fast_check"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+yara-x = { version = "=0.15.0", features = ["default"] }
+clap = { version = "4.5.39", features = ["color"] }
+tokio = { version = "1.44", features = ["full"] }
+rust-embed = { version = "8.7.2", features = ["include-exclude"] }
+[profile.release]
+opt-level = 3      # 优化级别 (0-3, s, z)
+lto = "thin"       # 链接时优化 (true/false/"thin"/"fat")
+codegen-units = 1  # 减少并行代码生成单元以提高优化
+panic = "abort"    # 替换 panic 为直接终止（减小二进制体积）
+incremental = false # 禁用增量编译（提高优化稳定性）
+strip = true       # 移除调试符号（减小二进制体积）
+debug = false  # 禁用所有调试信息
